@@ -267,58 +267,77 @@
                   <span class="fe-group-readout fe-readout-blue" id="fe-readout-f1">3 / 5</span>
                 </div>
 
-                <div class="fe-slider-row">
-                  <div class="fe-slider-label-row">
-                    <label class="fe-slider-label" for="fe-num1-slider">Tử số 1 (Số cột được chọn)</label>
-                    <span class="fe-slider-val" id="fe-num1-val">3 / 5 cột</span>
+                <div class="fe-number-grid">
+                  <div class="fe-number-field">
+                    <div class="fe-number-label-row">
+                      <label class="fe-number-label" for="fe-num1-input">Tử số 1</label>
+                      <span class="fe-number-hint" id="fe-num1-hint">0 – 5</span>
+                    </div>
+                    <div class="fe-number-control">
+                      <button
+                        type="button"
+                        class="fe-step-btn"
+                        id="fe-num1-dec"
+                        aria-label="Giảm tử số 1"
+                      >
+                        −
+                      </button>
+                      <input
+                        type="number"
+                        id="fe-num1-input"
+                        class="fe-number-input fe-number-input-blue"
+                        min="0"
+                        max="5"
+                        step="1"
+                        inputmode="numeric"
+                        value="3"
+                        aria-describedby="fe-num1-hint"
+                      />
+                      <button
+                        type="button"
+                        class="fe-step-btn"
+                        id="fe-num1-inc"
+                        aria-label="Tăng tử số 1"
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
-                  <div class="fe-slider-control">
-                    <button
-                      type="button"
-                      class="fe-step-btn"
-                      id="fe-num1-dec"
-                      aria-label="Giảm tử số 1"
-                    >
-                      −
-                    </button>
-                    <input
-                      type="range"
-                      id="fe-num1-slider"
-                      class="fe-slider fe-slider-blue"
-                      min="0"
-                      max="5"
-                      step="1"
-                      value="3"
-                    />
-                    <button
-                      type="button"
-                      class="fe-step-btn"
-                      id="fe-num1-inc"
-                      aria-label="Tăng tử số 1"
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
 
-                <div class="fe-slider-row">
-                  <div class="fe-slider-label-row">
-                    <label class="fe-slider-label" for="fe-denom1-slider">Mẫu số 1 (Chia thành số cột)</label>
-                    <span class="fe-slider-val" id="fe-denom1-val">5 cột</span>
-                  </div>
-                  <div class="fe-slider-control">
-                    <input
-                      type="range"
-                      id="fe-denom1-slider"
-                      class="fe-slider fe-slider-blue"
-                      min="1"
-                      max="12"
-                      step="1"
-                      value="5"
-                    />
-                  </div>
-                  <div class="fe-tick-labels" aria-hidden="true">
-                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+                  <div class="fe-number-field">
+                    <div class="fe-number-label-row">
+                      <label class="fe-number-label" for="fe-denom1-input">Mẫu số 1</label>
+                      <span class="fe-number-hint" id="fe-denom1-hint">1 – 12</span>
+                    </div>
+                    <div class="fe-number-control">
+                      <button
+                        type="button"
+                        class="fe-step-btn"
+                        id="fe-denom1-dec"
+                        aria-label="Giảm mẫu số 1"
+                      >
+                        −
+                      </button>
+                      <input
+                        type="number"
+                        id="fe-denom1-input"
+                        class="fe-number-input fe-number-input-blue"
+                        min="1"
+                        max="12"
+                        step="1"
+                        inputmode="numeric"
+                        value="5"
+                        aria-describedby="fe-denom1-hint"
+                      />
+                      <button
+                        type="button"
+                        class="fe-step-btn"
+                        id="fe-denom1-inc"
+                        aria-label="Tăng mẫu số 1"
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -335,58 +354,77 @@
                   <span class="fe-group-readout fe-readout-amber" id="fe-readout-f2">2 / 4</span>
                 </div>
 
-                <div class="fe-slider-row">
-                  <div class="fe-slider-label-row">
-                    <label class="fe-slider-label" for="fe-num2-slider">Tử số 2 (Số hàng được chọn)</label>
-                    <span class="fe-slider-val" id="fe-num2-val">2 / 4 hàng</span>
+                <div class="fe-number-grid">
+                  <div class="fe-number-field">
+                    <div class="fe-number-label-row">
+                      <label class="fe-number-label" for="fe-num2-input">Tử số 2</label>
+                      <span class="fe-number-hint" id="fe-num2-hint">0 – 4</span>
+                    </div>
+                    <div class="fe-number-control">
+                      <button
+                        type="button"
+                        class="fe-step-btn"
+                        id="fe-num2-dec"
+                        aria-label="Giảm tử số 2"
+                      >
+                        −
+                      </button>
+                      <input
+                        type="number"
+                        id="fe-num2-input"
+                        class="fe-number-input fe-number-input-amber"
+                        min="0"
+                        max="4"
+                        step="1"
+                        inputmode="numeric"
+                        value="2"
+                        aria-describedby="fe-num2-hint"
+                      />
+                      <button
+                        type="button"
+                        class="fe-step-btn"
+                        id="fe-num2-inc"
+                        aria-label="Tăng tử số 2"
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
-                  <div class="fe-slider-control">
-                    <button
-                      type="button"
-                      class="fe-step-btn"
-                      id="fe-num2-dec"
-                      aria-label="Giảm tử số 2"
-                    >
-                      −
-                    </button>
-                    <input
-                      type="range"
-                      id="fe-num2-slider"
-                      class="fe-slider fe-slider-amber"
-                      min="0"
-                      max="4"
-                      step="1"
-                      value="2"
-                    />
-                    <button
-                      type="button"
-                      class="fe-step-btn"
-                      id="fe-num2-inc"
-                      aria-label="Tăng tử số 2"
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
 
-                <div class="fe-slider-row">
-                  <div class="fe-slider-label-row">
-                    <label class="fe-slider-label" for="fe-denom2-slider">Mẫu số 2 (Chia thành số hàng)</label>
-                    <span class="fe-slider-val" id="fe-denom2-val">4 hàng</span>
-                  </div>
-                  <div class="fe-slider-control">
-                    <input
-                      type="range"
-                      id="fe-denom2-slider"
-                      class="fe-slider fe-slider-amber"
-                      min="1"
-                      max="12"
-                      step="1"
-                      value="4"
-                    />
-                  </div>
-                  <div class="fe-tick-labels" aria-hidden="true">
-                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+                  <div class="fe-number-field">
+                    <div class="fe-number-label-row">
+                      <label class="fe-number-label" for="fe-denom2-input">Mẫu số 2</label>
+                      <span class="fe-number-hint" id="fe-denom2-hint">1 – 12</span>
+                    </div>
+                    <div class="fe-number-control">
+                      <button
+                        type="button"
+                        class="fe-step-btn"
+                        id="fe-denom2-dec"
+                        aria-label="Giảm mẫu số 2"
+                      >
+                        −
+                      </button>
+                      <input
+                        type="number"
+                        id="fe-denom2-input"
+                        class="fe-number-input fe-number-input-amber"
+                        min="1"
+                        max="12"
+                        step="1"
+                        inputmode="numeric"
+                        value="4"
+                        aria-describedby="fe-denom2-hint"
+                      />
+                      <button
+                        type="button"
+                        class="fe-step-btn"
+                        id="fe-denom2-inc"
+                        aria-label="Tăng mẫu số 2"
+                      >
+                        +
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -733,19 +771,21 @@
           // Control DOM
           readoutF1: document.getElementById("fe-readout-f1"),
           readoutF2: document.getElementById("fe-readout-f2"),
-          num1Slider: document.getElementById("fe-num1-slider"),
-          num1Val: document.getElementById("fe-num1-val"),
+          num1Input: document.getElementById("fe-num1-input"),
+          num1Hint: document.getElementById("fe-num1-hint"),
           num1Dec: document.getElementById("fe-num1-dec"),
           num1Inc: document.getElementById("fe-num1-inc"),
-          denom1Slider: document.getElementById("fe-denom1-slider"),
-          denom1Val: document.getElementById("fe-denom1-val"),
+          denom1Input: document.getElementById("fe-denom1-input"),
+          denom1Dec: document.getElementById("fe-denom1-dec"),
+          denom1Inc: document.getElementById("fe-denom1-inc"),
 
-          num2Slider: document.getElementById("fe-num2-slider"),
-          num2Val: document.getElementById("fe-num2-val"),
+          num2Input: document.getElementById("fe-num2-input"),
+          num2Hint: document.getElementById("fe-num2-hint"),
           num2Dec: document.getElementById("fe-num2-dec"),
           num2Inc: document.getElementById("fe-num2-inc"),
-          denom2Slider: document.getElementById("fe-denom2-slider"),
-          denom2Val: document.getElementById("fe-denom2-val")
+          denom2Input: document.getElementById("fe-denom2-input"),
+          denom2Dec: document.getElementById("fe-denom2-dec"),
+          denom2Inc: document.getElementById("fe-denom2-inc")
         };
 
         // Persistent SVG element pools for smooth CSS transitions
@@ -1141,19 +1181,31 @@
           dom.readoutF1.textContent = a + " / " + b;
           dom.readoutF2.textContent = c + " / " + d;
 
-          dom.denom1Slider.value = String(b);
-          dom.denom1Val.textContent = b + " cột";
-          dom.num1Slider.max = String(b);
-          dom.num1Slider.value = String(a);
-          dom.num1Val.textContent = a + " / " + b + " cột";
+          if (!(document.activeElement === dom.denom1Input && dom.denom1Input.value === "")) {
+            dom.denom1Input.value = String(b);
+          }
+          dom.denom1Dec.disabled = b <= 1;
+          dom.denom1Inc.disabled = b >= MAX_DIVISIONS;
+
+          dom.num1Input.max = String(b);
+          if (!(document.activeElement === dom.num1Input && dom.num1Input.value === "")) {
+            dom.num1Input.value = String(a);
+          }
+          dom.num1Hint.textContent = "0 – " + b;
           dom.num1Dec.disabled = a <= 0;
           dom.num1Inc.disabled = a >= b;
 
-          dom.denom2Slider.value = String(d);
-          dom.denom2Val.textContent = d + " hàng";
-          dom.num2Slider.max = String(d);
-          dom.num2Slider.value = String(c);
-          dom.num2Val.textContent = c + " / " + d + " hàng";
+          if (!(document.activeElement === dom.denom2Input && dom.denom2Input.value === "")) {
+            dom.denom2Input.value = String(d);
+          }
+          dom.denom2Dec.disabled = d <= 1;
+          dom.denom2Inc.disabled = d >= MAX_DIVISIONS;
+
+          dom.num2Input.max = String(d);
+          if (!(document.activeElement === dom.num2Input && dom.num2Input.value === "")) {
+            dom.num2Input.value = String(c);
+          }
+          dom.num2Hint.textContent = "0 – " + d;
           dom.num2Dec.disabled = c <= 0;
           dom.num2Inc.disabled = c >= d;
         }
@@ -1167,24 +1219,104 @@
         /* ====================================================================
            5. EVENT BINDINGS
            ==================================================================== */
+        function blockNonNaturalKeys(e) {
+          if (e.key === "-" || e.key === "+" || e.key === "." || e.key === "," || e.key === "e" || e.key === "E") {
+            e.preventDefault();
+          }
+        }
+
+        function bindNaturalNumberInput(inputEl, getBounds, onValidCommit) {
+          inputEl.addEventListener("keydown", blockNonNaturalKeys);
+
+          inputEl.addEventListener("input", function () {
+            var raw = inputEl.value.trim();
+            if (raw === "") return;
+            var parsed = Math.floor(Number(raw));
+            if (!Number.isFinite(parsed)) return;
+            var bounds = getBounds();
+            if (parsed < bounds.min) return;
+            var clamped = Math.min(bounds.max, parsed);
+            if (parsed > bounds.max) {
+              inputEl.value = String(clamped);
+            }
+            onValidCommit(clamped);
+            render();
+          });
+
+          function normalizeOnFinish() {
+            var bounds = getBounds();
+            var raw = inputEl.value.trim();
+            var parsed = raw === "" ? NaN : Math.floor(Number(raw));
+            var nextVal = Number.isFinite(parsed)
+              ? Math.max(bounds.min, Math.min(bounds.max, parsed))
+              : bounds.fallback;
+            inputEl.value = String(nextVal);
+            onValidCommit(nextVal);
+            render();
+          }
+
+          inputEl.addEventListener("change", normalizeOnFinish);
+          inputEl.addEventListener("blur", normalizeOnFinish);
+        }
+
         function bindEvents() {
-          dom.denom1Slider.addEventListener("input", function (e) {
-            setDenom1(parseInt(e.target.value, 10));
+          bindNaturalNumberInput(
+            dom.denom1Input,
+            function () {
+              return { min: 1, max: MAX_DIVISIONS, fallback: state.denom1 };
+            },
+            function (val) {
+              setDenom1(val);
+            }
+          );
+
+          bindNaturalNumberInput(
+            dom.denom2Input,
+            function () {
+              return { min: 1, max: MAX_DIVISIONS, fallback: state.denom2 };
+            },
+            function (val) {
+              setDenom2(val);
+            }
+          );
+
+          bindNaturalNumberInput(
+            dom.num1Input,
+            function () {
+              return { min: 0, max: state.denom1, fallback: state.selectedCols.size };
+            },
+            function (val) {
+              syncSelectionCount(state.selectedCols, state.denom1, val);
+            }
+          );
+
+          bindNaturalNumberInput(
+            dom.num2Input,
+            function () {
+              return { min: 0, max: state.denom2, fallback: state.selectedRows.size };
+            },
+            function (val) {
+              syncSelectionCount(state.selectedRows, state.denom2, val);
+            }
+          );
+
+          dom.denom1Dec.addEventListener("click", function () {
+            setDenom1(state.denom1 - 1);
             render();
           });
 
-          dom.denom2Slider.addEventListener("input", function (e) {
-            setDenom2(parseInt(e.target.value, 10));
+          dom.denom1Inc.addEventListener("click", function () {
+            setDenom1(state.denom1 + 1);
             render();
           });
 
-          dom.num1Slider.addEventListener("input", function (e) {
-            syncSelectionCount(state.selectedCols, state.denom1, parseInt(e.target.value, 10));
+          dom.denom2Dec.addEventListener("click", function () {
+            setDenom2(state.denom2 - 1);
             render();
           });
 
-          dom.num2Slider.addEventListener("input", function (e) {
-            syncSelectionCount(state.selectedRows, state.denom2, parseInt(e.target.value, 10));
+          dom.denom2Inc.addEventListener("click", function () {
+            setDenom2(state.denom2 + 1);
             render();
           });
 
