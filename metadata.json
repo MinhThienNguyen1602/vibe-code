@@ -1,0 +1,6 @@
+{
+  "name": "Bàn Cờ Phân Số & Tỉ Lệ",
+  "description": "Học liệu Toán học tương tác giúp khám phá phép nhân phân số, diện tích giao nhau, số thập phân và tỉ số phần trăm trên lưới hình vuông đơn vị.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,755 @@
+/* ==========================================================================
+   Bàn Cờ Phân Số & Tỉ Lệ (Fraction & Area Grid Explorer)
+   Scoped pure CSS stylesheet (.fraction-explorer-app / .fe-*)
+   ========================================================================== */
+
+.fe-host-body {
+  margin: 0;
+  padding: 0;
+  background-color: #f4f6f9;
+  color: #0f172a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.fraction-explorer-app {
+  --fe-bg-canvas: #f4f6f9;
+  --fe-bg-surface: #ffffff;
+  --fe-bg-subtle: #f8fafc;
+  --fe-bg-muted: #f1f5f9;
+  --fe-border-hairline: #e2e8f0;
+  --fe-border-strong: #cbd5e1;
+
+  --fe-text-primary: #0f172a;
+  --fe-text-secondary: #475569;
+  --fe-text-muted: #64748b;
+
+  --fe-blue-solid: #2563eb;
+  --fe-blue-soft: #eff6ff;
+  --fe-blue-border: #bfdbfe;
+  --fe-blue-layer: rgba(59, 130, 246, 0.45);
+
+  --fe-amber-solid: #d97706;
+  --fe-amber-soft: #fffbeb;
+  --fe-amber-border: #fde68a;
+  --fe-amber-layer: rgba(245, 158, 11, 0.45);
+
+  --fe-green-solid: #15803d;
+  --fe-green-deep: #14532d;
+  --fe-green-soft: #f0fdf4;
+  --fe-green-border: #bbf7d0;
+
+  --fe-radius-lg: 14px;
+  --fe-radius-md: 10px;
+  --fe-radius-sm: 7px;
+
+  --fe-shadow-card: 0 1px 3px rgba(15, 23, 42, 0.05), 0 4px 16px rgba(15, 23, 42, 0.04);
+  --fe-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+  font-family: "Plus Jakarta Sans", "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--fe-text-primary);
+  background-color: var(--fe-bg-canvas);
+  line-height: 1.5;
+  padding: 24px 20px 36px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.fraction-explorer-app *,
+.fraction-explorer-app *::before,
+.fraction-explorer-app *::after {
+  box-sizing: border-box;
+}
+
+.fe-shell {
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+/* Header */
+.fe-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--fe-border-hairline);
+}
+
+.fe-header-copy {
+  min-width: 0;
+}
+
+.fe-kicker {
+  margin: 0 0 4px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--fe-text-muted);
+  letter-spacing: 0.01em;
+}
+
+.fe-title {
+  margin: 0;
+  font-size: clamp(1.5rem, 2.6vw, 2.05rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--fe-text-primary);
+  text-wrap: balance;
+}
+
+.fe-subtitle {
+  margin: 6px 0 0;
+  font-size: 0.9375rem;
+  color: var(--fe-text-secondary);
+  max-width: 64ch;
+}
+
+.fe-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+/* Buttons */
+.fe-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 10px 16px;
+  min-height: 40px;
+  border-radius: var(--fe-radius-sm);
+  border: 1px solid var(--fe-border-strong);
+  background-color: var(--fe-bg-surface);
+  color: var(--fe-text-primary);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background-color 150ms var(--fe-ease), border-color 150ms var(--fe-ease), transform 120ms var(--fe-ease);
+}
+
+.fe-btn:hover {
+  background-color: var(--fe-bg-subtle);
+  border-color: #94a3b8;
+}
+
+.fe-btn:active {
+  transform: translateY(1px);
+}
+
+.fe-btn:focus-visible,
+.fe-seg-btn:focus-visible,
+.fe-step-btn:focus-visible,
+.fe-slider:focus-visible {
+  outline: 2px solid var(--fe-blue-solid);
+  outline-offset: 2px;
+}
+
+/* Main 2-column workspace */
+.fe-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(350px, 0.88fr);
+  gap: 24px;
+  align-items: start;
+}
+
+/* Card surface (single elevation) */
+.fe-panel {
+  background-color: var(--fe-bg-surface);
+  border: 1px solid var(--fe-border-hairline);
+  border-radius: var(--fe-radius-lg);
+  box-shadow: var(--fe-shadow-card);
+  padding: 20px;
+}
+
+/* Left Column: Interactive Board */
+.fe-board-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.fe-board-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fe-section-label {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--fe-text-primary);
+}
+
+/* Mode Segmented Control */
+.fe-mode-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  background-color: var(--fe-bg-muted);
+  border: 1px solid var(--fe-border-hairline);
+  border-radius: var(--fe-radius-md);
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.fe-seg-btn {
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 9px 12px;
+  min-height: 34px;
+  border: none;
+  border-radius: 6px;
+  background-color: transparent;
+  color: var(--fe-text-secondary);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background-color 160ms var(--fe-ease), color 160ms var(--fe-ease), box-shadow 160ms var(--fe-ease);
+}
+
+.fe-seg-btn:hover {
+  color: var(--fe-text-primary);
+}
+
+.fe-seg-btn.fe-is-active {
+  background-color: var(--fe-bg-surface);
+  color: var(--fe-text-primary);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+}
+
+.fe-seg-btn[data-mode="frac1"].fe-is-active {
+  color: var(--fe-blue-solid);
+}
+
+.fe-seg-btn[data-mode="frac2"].fe-is-active {
+  color: var(--fe-amber-solid);
+}
+
+.fe-seg-btn[data-mode="multiply"].fe-is-active {
+  color: var(--fe-green-solid);
+}
+
+/* SVG Board Stage */
+.fe-svg-stage {
+  background-color: var(--fe-bg-subtle);
+  border: 1px solid var(--fe-border-hairline);
+  border-radius: var(--fe-radius-md);
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fe-board-svg {
+  width: 100%;
+  max-width: 540px;
+  height: auto;
+  display: block;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* SVG internal animated layers */
+.fe-svg-col-layer,
+.fe-svg-row-layer,
+.fe-svg-intersect-layer,
+.fe-svg-grid-line,
+.fe-svg-header-tab,
+.fe-svg-cell-hit {
+  transition: opacity 220ms var(--fe-ease),
+              fill 200ms var(--fe-ease),
+              fill-opacity 200ms var(--fe-ease),
+              stroke 200ms var(--fe-ease),
+              transform 240ms var(--fe-ease);
+}
+
+.fe-svg-header-tab {
+  cursor: pointer;
+}
+
+.fe-svg-header-tab:hover .fe-svg-tab-bg {
+  stroke: #475569;
+  stroke-width: 1.5;
+}
+
+.fe-svg-header-tab:focus-visible {
+  outline: 2px solid var(--fe-blue-solid);
+  outline-offset: 2px;
+}
+
+.fe-svg-cell-hit {
+  cursor: pointer;
+  fill: transparent;
+}
+
+.fe-svg-cell-hit:hover {
+  fill: rgba(15, 23, 42, 0.045);
+}
+
+.fe-svg-hover-indicator {
+  pointer-events: none;
+  transition: opacity 120ms ease, transform 120ms var(--fe-ease);
+}
+
+/* Legend & Hint */
+.fe-board-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.fe-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.8125rem;
+  color: var(--fe-text-secondary);
+}
+
+.fe-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.fe-swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.fe-swatch-blue {
+  background-color: var(--fe-blue-layer);
+  border: 1px solid var(--fe-blue-solid);
+}
+
+.fe-swatch-amber {
+  background-color: var(--fe-amber-layer);
+  border: 1px solid var(--fe-amber-solid);
+}
+
+.fe-swatch-green {
+  background-color: var(--fe-green-solid);
+  border: 2px solid var(--fe-green-deep);
+}
+
+.fe-board-hint {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: var(--fe-text-muted);
+}
+
+/* Right Column: Analysis & Controls */
+.fe-side-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Equation Showcase */
+.fe-analysis-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.fe-panel-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fe-panel-meta {
+  font-size: 0.8125rem;
+  color: var(--fe-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.fe-equation-box {
+  background-color: var(--fe-bg-subtle);
+  border: 1px solid var(--fe-border-hairline);
+  border-radius: var(--fe-radius-md);
+  padding: 16px 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px 14px;
+  font-variant-numeric: tabular-nums;
+}
+
+.fe-frac {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 34px;
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.fe-frac-num {
+  padding: 2px 6px 4px;
+  font-size: 1.25rem;
+}
+
+.fe-frac-bar {
+  width: 100%;
+  min-width: 28px;
+  height: 2px;
+  background-color: currentColor;
+  border-radius: 2px;
+}
+
+.fe-frac-den {
+  padding: 4px 6px 2px;
+  font-size: 1.25rem;
+}
+
+.fe-frac-1 {
+  color: var(--fe-blue-solid);
+}
+
+.fe-frac-2 {
+  color: var(--fe-amber-solid);
+}
+
+.fe-frac-result {
+  color: var(--fe-green-solid);
+}
+
+.fe-frac-simplified {
+  color: var(--fe-green-deep);
+}
+
+.fe-op {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--fe-text-secondary);
+}
+
+.fe-simplified-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fe-is-hidden {
+  display: none !important;
+}
+
+/* Metrics Row (3 tabular figures) */
+.fe-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid var(--fe-border-hairline);
+  border-radius: var(--fe-radius-md);
+  overflow: hidden;
+  background-color: var(--fe-bg-surface);
+}
+
+.fe-metric-cell {
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fe-metric-cell + .fe-metric-cell {
+  border-left: 1px solid var(--fe-border-hairline);
+}
+
+.fe-metric-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--fe-text-muted);
+}
+
+.fe-metric-value {
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--fe-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.fe-metric-sub {
+  font-size: 0.75rem;
+  color: var(--fe-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Pedagogical Explanation Box (all-around hairline border, no thick left stripe) */
+.fe-explain-box {
+  background-color: var(--fe-green-soft);
+  border: 1px solid var(--fe-green-border);
+  border-radius: var(--fe-radius-md);
+  padding: 14px 16px;
+}
+
+.fe-explain-title {
+  margin: 0 0 6px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--fe-green-deep);
+}
+
+.fe-explain-text {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: #1e293b;
+}
+
+/* Controls Panel */
+.fe-controls-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.fe-control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.fe-control-divider {
+  height: 1px;
+  background-color: var(--fe-border-hairline);
+  margin: 2px 0;
+}
+
+.fe-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fe-group-title-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fe-group-title {
+  margin: 0;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--fe-text-primary);
+}
+
+.fe-group-readout {
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.fe-readout-blue {
+  color: var(--fe-blue-solid);
+}
+
+.fe-readout-amber {
+  color: var(--fe-amber-solid);
+}
+
+.fe-slider-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.fe-slider-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.8125rem;
+  color: var(--fe-text-secondary);
+}
+
+.fe-slider-label {
+  font-weight: 600;
+  color: var(--fe-text-primary);
+}
+
+.fe-slider-val {
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--fe-text-secondary);
+}
+
+.fe-slider-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.fe-step-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--fe-radius-sm);
+  border: 1px solid var(--fe-border-strong);
+  background-color: var(--fe-bg-surface);
+  color: var(--fe-text-primary);
+  font-family: inherit;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background-color 140ms var(--fe-ease), border-color 140ms var(--fe-ease);
+}
+
+.fe-step-btn:hover:not(:disabled) {
+  background-color: var(--fe-bg-muted);
+  border-color: #94a3b8;
+}
+
+.fe-step-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Custom Range Slider */
+.fe-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background-color: var(--fe-border-hairline);
+  cursor: pointer;
+  margin: 0;
+}
+
+.fe-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--fe-bg-surface);
+  border: 2.5px solid var(--fe-text-primary);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
+  transition: transform 140ms var(--fe-ease);
+}
+
+.fe-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+
+.fe-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: var(--fe-bg-surface);
+  border: 2.5px solid var(--fe-text-primary);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.18);
+  transition: transform 140ms var(--fe-ease);
+}
+
+.fe-slider-blue::-webkit-slider-thumb {
+  border-color: var(--fe-blue-solid);
+}
+
+.fe-slider-blue::-moz-range-thumb {
+  border-color: var(--fe-blue-solid);
+}
+
+.fe-slider-amber::-webkit-slider-thumb {
+  border-color: var(--fe-amber-solid);
+}
+
+.fe-slider-amber::-moz-range-thumb {
+  border-color: var(--fe-amber-solid);
+}
+
+.fe-tick-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6875rem;
+  color: var(--fe-text-muted);
+  font-variant-numeric: tabular-nums;
+  padding: 0 6px;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 980px) {
+  .fe-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .fe-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .fraction-explorer-app {
+    padding: 16px 12px 28px;
+  }
+
+  .fe-panel {
+    padding: 16px;
+  }
+
+  .fe-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fe-metric-cell + .fe-metric-cell {
+    border-left: none;
+    border-top: 1px solid var(--fe-border-hairline);
+  }
+
+  .fe-btn,
+  .fe-step-btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .fe-seg-btn {
+    min-height: 38px;
+    padding: 8px 10px;
+    font-size: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fe-svg-col-layer,
+  .fe-svg-row-layer,
+  .fe-svg-intersect-layer,
+  .fe-svg-grid-line,
+  .fe-svg-header-tab,
+  .fe-svg-cell-hit,
+  .fe-btn,
+  .fe-seg-btn,
+  .fe-step-btn {
+    transition: none !important;
+  }
+}

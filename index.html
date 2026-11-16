@@ -1,0 +1,1231 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bàn Cờ Phân Số &amp; Tỉ Lệ</title>
+    <meta
+      name="description"
+      content="Học liệu Toán học tương tác giúp khám phá phép nhân phân số, diện tích giao nhau, số thập phân và tỉ số phần trăm trên lưới hình vuông đơn vị."
+    />
+    <meta property="og:title" content="Bàn Cờ Phân Số &amp; Tỉ Lệ" />
+    <meta
+      property="og:description"
+      content="Học liệu Toán học tương tác giúp khám phá phép nhân phân số, diện tích giao nhau, số thập phân và tỉ số phần trăm trên lưới hình vuông đơn vị."
+    />
+    <meta property="og:type" content="website" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="fe-host-body">
+    <div class="fraction-explorer-app" id="fraction-explorer-app">
+      <div class="fe-shell">
+        <header class="fe-header">
+          <div class="fe-header-copy">
+            <p class="fe-kicker">Học liệu Toán học tương tác · Diện tích hình vuông đơn vị</p>
+            <h1 class="fe-title">Bàn Cờ Phân Số &amp; Tỉ Lệ</h1>
+            <p class="fe-subtitle">
+              Khám phá trực quan phép nhân hai phân số qua các lớp cột dọc, hàng ngang và vùng giao nhau trên lưới đơn vị.
+            </p>
+          </div>
+          <div class="fe-header-actions">
+            <button type="button" class="fe-btn" id="fe-reset-btn">Đặt lại</button>
+          </div>
+        </header>
+
+        <main class="fe-workspace">
+          <!-- Cột trái: Bàn cờ SVG tương tác -->
+          <section class="fe-panel fe-board-panel" aria-label="Bàn cờ phân số tương tác">
+            <div class="fe-board-toolbar">
+              <h2 class="fe-section-label">Bàn cờ hình vuông đơn vị</h2>
+              <div class="fe-mode-group" role="tablist" aria-label="Chế độ hiển thị lớp màu">
+                <button
+                  type="button"
+                  role="tab"
+                  class="fe-seg-btn"
+                  data-mode="frac1"
+                  aria-selected="false"
+                >
+                  Chỉ xem Phân số 1
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  class="fe-seg-btn"
+                  data-mode="frac2"
+                  aria-selected="false"
+                >
+                  Chỉ xem Phân số 2
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  class="fe-seg-btn fe-is-active"
+                  data-mode="multiply"
+                  aria-selected="true"
+                >
+                  Chồng hai lớp (Phép nhân)
+                </button>
+              </div>
+            </div>
+
+            <div class="fe-svg-stage">
+              <svg
+                id="fe-board-svg"
+                class="fe-board-svg"
+                viewBox="0 0 540 540"
+                role="img"
+                aria-label="Lưới hình vuông đơn vị biểu diễn hai phân số và vùng giao nhau"
+              >
+                <!-- Top label -->
+                <text
+                  id="fe-svg-top-caption"
+                  x="284"
+                  y="18"
+                  text-anchor="middle"
+                  fill="#2563eb"
+                  font-size="13"
+                  font-weight="700"
+                  font-family="Plus Jakarta Sans, sans-serif"
+                >
+                  Phân số 1 (Cột): 3 / 5
+                </text>
+
+                <!-- Left label -->
+                <text
+                  id="fe-svg-left-caption"
+                  x="16"
+                  y="284"
+                  text-anchor="middle"
+                  fill="#d97706"
+                  font-size="13"
+                  font-weight="700"
+                  font-family="Plus Jakarta Sans, sans-serif"
+                  transform="rotate(-90 16 284)"
+                >
+                  Phân số 2 (Hàng): 2 / 4
+                </text>
+
+                <!-- Interactive column & row header tabs -->
+                <g id="fe-svg-col-tabs"></g>
+                <g id="fe-svg-row-tabs"></g>
+
+                <!-- Unit square base -->
+                <rect
+                  x="64"
+                  y="64"
+                  width="440"
+                  height="440"
+                  fill="#ffffff"
+                  rx="2"
+                ></rect>
+
+                <!-- Clipped unit square interior layers -->
+                <defs>
+                  <clipPath id="fe-unit-square-clip">
+                    <rect x="64" y="64" width="440" height="440" rx="2"></rect>
+                  </clipPath>
+                </defs>
+
+                <g clip-path="url(#fe-unit-square-clip)">
+                  <g id="fe-svg-col-layers"></g>
+                  <g id="fe-svg-row-layers"></g>
+                  <g id="fe-svg-intersect-layers"></g>
+                  <g id="fe-svg-grid-lines"></g>
+                  <g id="fe-svg-hit-cells"></g>
+                </g>
+
+                <!-- Outer unit square frame -->
+                <rect
+                  x="64"
+                  y="64"
+                  width="440"
+                  height="440"
+                  fill="none"
+                  stroke="#0f172a"
+                  stroke-width="2"
+                  rx="2"
+                ></rect>
+
+                <!-- Unit dimension markers -->
+                <text
+                  x="284"
+                  y="526"
+                  text-anchor="middle"
+                  fill="#64748b"
+                  font-size="12"
+                  font-weight="600"
+                  font-family="Plus Jakarta Sans, sans-serif"
+                >
+                  Chiều rộng = 1 đơn vị
+                </text>
+              </svg>
+            </div>
+
+            <div class="fe-board-footer">
+              <div class="fe-legend">
+                <span class="fe-legend-item">
+                  <span class="fe-swatch fe-swatch-blue" aria-hidden="true"></span>
+                  <span>Phân số 1 (Cột)</span>
+                </span>
+                <span class="fe-legend-item">
+                  <span class="fe-swatch fe-swatch-amber" aria-hidden="true"></span>
+                  <span>Phân số 2 (Hàng)</span>
+                </span>
+                <span class="fe-legend-item">
+                  <span class="fe-swatch fe-swatch-green" aria-hidden="true"></span>
+                  <span>Vùng giao nhau (Phép nhân)</span>
+                </span>
+              </div>
+              <p class="fe-board-hint" id="fe-board-hint">
+                Nhấp trực tiếp vào các thẻ số cột phía trên, thẻ số hàng bên trái hoặc ô lưới để bật/tắt tô màu.
+              </p>
+            </div>
+          </section>
+
+          <!-- Cột phải: Bảng phân tích toán học & Bộ điều khiển -->
+          <div class="fe-side-stack">
+            <!-- Bảng phân tích toán học thời gian thực -->
+            <section class="fe-panel fe-analysis-panel" aria-label="Phân tích toán học thời gian thực">
+              <div class="fe-panel-header">
+                <h2 class="fe-section-label">Phân tích toán học</h2>
+                <span class="fe-panel-meta" id="fe-grid-dimension-label">Lưới 5 × 4 = 20 ô</span>
+              </div>
+
+              <div class="fe-equation-box" aria-live="polite">
+                <div class="fe-frac fe-frac-1" aria-label="Phân số thứ nhất">
+                  <span class="fe-frac-num" id="fe-eq-a">3</span>
+                  <span class="fe-frac-bar"></span>
+                  <span class="fe-frac-den" id="fe-eq-b">5</span>
+                </div>
+
+                <span class="fe-op" aria-hidden="true">×</span>
+
+                <div class="fe-frac fe-frac-2" aria-label="Phân số thứ hai">
+                  <span class="fe-frac-num" id="fe-eq-c">2</span>
+                  <span class="fe-frac-bar"></span>
+                  <span class="fe-frac-den" id="fe-eq-d">4</span>
+                </div>
+
+                <span class="fe-op" aria-hidden="true">=</span>
+
+                <div class="fe-frac fe-frac-result" aria-label="Phân số tích">
+                  <span class="fe-frac-num" id="fe-eq-prod-num">6</span>
+                  <span class="fe-frac-bar"></span>
+                  <span class="fe-frac-den" id="fe-eq-prod-den">20</span>
+                </div>
+
+                <div class="fe-simplified-wrap" id="fe-simplified-wrap">
+                  <span class="fe-op" aria-hidden="true">=</span>
+                  <div class="fe-frac fe-frac-simplified" id="fe-simp-frac-box" aria-label="Phân số tối giản">
+                    <span class="fe-frac-num" id="fe-eq-simp-num">3</span>
+                    <span class="fe-frac-bar"></span>
+                    <span class="fe-frac-den" id="fe-eq-simp-den">10</span>
+                  </div>
+                  <span class="fe-op fe-is-hidden" id="fe-eq-whole-val">0</span>
+                </div>
+              </div>
+
+              <div class="fe-metrics-grid">
+                <div class="fe-metric-cell">
+                  <span class="fe-metric-label">Số ô giao nhau</span>
+                  <span class="fe-metric-value" id="fe-metric-cells">6 / 20 ô</span>
+                  <span class="fe-metric-sub" id="fe-metric-cells-sub">3 cột × 2 hàng</span>
+                </div>
+                <div class="fe-metric-cell">
+                  <span class="fe-metric-label">Số thập phân</span>
+                  <span class="fe-metric-value" id="fe-metric-decimal">0.3</span>
+                  <span class="fe-metric-sub">Trên 1 đơn vị</span>
+                </div>
+                <div class="fe-metric-cell">
+                  <span class="fe-metric-label">Tỉ số phần trăm</span>
+                  <span class="fe-metric-value" id="fe-metric-percent">30%</span>
+                  <span class="fe-metric-sub">Diện tích chung</span>
+                </div>
+              </div>
+
+              <div class="fe-explain-box" aria-live="polite">
+                <h3 class="fe-explain-title">Giải thích trực quan</h3>
+                <p class="fe-explain-text" id="fe-explain-text"></p>
+              </div>
+            </section>
+
+            <!-- Bảng điều khiển -->
+            <section class="fe-panel fe-controls-panel" aria-label="Bảng điều khiển thông số phân số">
+              <!-- Phân số 1 -->
+              <div class="fe-control-group">
+                <div class="fe-group-header">
+                  <div class="fe-group-title-wrap">
+                    <span class="fe-swatch fe-swatch-blue" aria-hidden="true"></span>
+                    <h3 class="fe-group-title">Phân số 1 (Các cột dọc)</h3>
+                  </div>
+                  <span class="fe-group-readout fe-readout-blue" id="fe-readout-f1">3 / 5</span>
+                </div>
+
+                <div class="fe-slider-row">
+                  <div class="fe-slider-label-row">
+                    <label class="fe-slider-label" for="fe-num1-slider">Tử số 1 (Số cột được chọn)</label>
+                    <span class="fe-slider-val" id="fe-num1-val">3 / 5 cột</span>
+                  </div>
+                  <div class="fe-slider-control">
+                    <button
+                      type="button"
+                      class="fe-step-btn"
+                      id="fe-num1-dec"
+                      aria-label="Giảm tử số 1"
+                    >
+                      −
+                    </button>
+                    <input
+                      type="range"
+                      id="fe-num1-slider"
+                      class="fe-slider fe-slider-blue"
+                      min="0"
+                      max="5"
+                      step="1"
+                      value="3"
+                    />
+                    <button
+                      type="button"
+                      class="fe-step-btn"
+                      id="fe-num1-inc"
+                      aria-label="Tăng tử số 1"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                <div class="fe-slider-row">
+                  <div class="fe-slider-label-row">
+                    <label class="fe-slider-label" for="fe-denom1-slider">Mẫu số 1 (Chia thành số cột)</label>
+                    <span class="fe-slider-val" id="fe-denom1-val">5 cột</span>
+                  </div>
+                  <div class="fe-slider-control">
+                    <input
+                      type="range"
+                      id="fe-denom1-slider"
+                      class="fe-slider fe-slider-blue"
+                      min="1"
+                      max="12"
+                      step="1"
+                      value="5"
+                    />
+                  </div>
+                  <div class="fe-tick-labels" aria-hidden="true">
+                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="fe-control-divider" role="separator"></div>
+
+              <!-- Phân số 2 -->
+              <div class="fe-control-group">
+                <div class="fe-group-header">
+                  <div class="fe-group-title-wrap">
+                    <span class="fe-swatch fe-swatch-amber" aria-hidden="true"></span>
+                    <h3 class="fe-group-title">Phân số 2 (Các hàng ngang)</h3>
+                  </div>
+                  <span class="fe-group-readout fe-readout-amber" id="fe-readout-f2">2 / 4</span>
+                </div>
+
+                <div class="fe-slider-row">
+                  <div class="fe-slider-label-row">
+                    <label class="fe-slider-label" for="fe-num2-slider">Tử số 2 (Số hàng được chọn)</label>
+                    <span class="fe-slider-val" id="fe-num2-val">2 / 4 hàng</span>
+                  </div>
+                  <div class="fe-slider-control">
+                    <button
+                      type="button"
+                      class="fe-step-btn"
+                      id="fe-num2-dec"
+                      aria-label="Giảm tử số 2"
+                    >
+                      −
+                    </button>
+                    <input
+                      type="range"
+                      id="fe-num2-slider"
+                      class="fe-slider fe-slider-amber"
+                      min="0"
+                      max="4"
+                      step="1"
+                      value="2"
+                    />
+                    <button
+                      type="button"
+                      class="fe-step-btn"
+                      id="fe-num2-inc"
+                      aria-label="Tăng tử số 2"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                <div class="fe-slider-row">
+                  <div class="fe-slider-label-row">
+                    <label class="fe-slider-label" for="fe-denom2-slider">Mẫu số 2 (Chia thành số hàng)</label>
+                    <span class="fe-slider-val" id="fe-denom2-val">4 hàng</span>
+                  </div>
+                  <div class="fe-slider-control">
+                    <input
+                      type="range"
+                      id="fe-denom2-slider"
+                      class="fe-slider fe-slider-amber"
+                      min="1"
+                      max="12"
+                      step="1"
+                      value="4"
+                    />
+                  </div>
+                  <div class="fe-tick-labels" aria-hidden="true">
+                    <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        /* ====================================================================
+           1. PURE LOGIC: Tính toán phân số, tỉ lệ và nội dung sư phạm
+           ==================================================================== */
+        var MAX_DIVISIONS = 12;
+        var BOARD_ORIGIN = 64;
+        var BOARD_SIZE = 440;
+        var SVG_NS = "http://www.w3.org/2000/svg";
+
+        var FractionMath = {
+          gcd: function (a, b) {
+            var x = Math.abs(a);
+            var y = Math.abs(b);
+            while (y !== 0) {
+              var t = y;
+              y = x % y;
+              x = t;
+            }
+            return x === 0 ? 1 : x;
+          },
+
+          simplify: function (num, den) {
+            if (num === 0) {
+              return { num: 0, den: 1, divisor: den, canSimplify: false, isWhole: true };
+            }
+            var divisor = FractionMath.gcd(num, den);
+            var simpNum = num / divisor;
+            var simpDen = den / divisor;
+            return {
+              num: simpNum,
+              den: simpDen,
+              divisor: divisor,
+              canSimplify: divisor > 1 || simpDen === 1,
+              isWhole: simpDen === 1
+            };
+          },
+
+          isTerminatingDecimal: function (den) {
+            var d = den;
+            while (d % 2 === 0) d /= 2;
+            while (d % 5 === 0) d /= 5;
+            return d === 1;
+          },
+
+          formatDecimal: function (num, den) {
+            if (num === 0) return "0";
+            if (num === den) return "1";
+            var simp = FractionMath.simplify(num, den);
+            var val = num / den;
+            if (FractionMath.isTerminatingDecimal(simp.den)) {
+              return String(Number(val.toFixed(6)));
+            }
+            return "≈ " + Number(val.toFixed(4));
+          },
+
+          formatPercent: function (num, den) {
+            if (num === 0) return "0%";
+            if (num === den) return "100%";
+            var simp = FractionMath.simplify(num, den);
+            var pct = (num / den) * 100;
+            // Terminates in <= 2 decimal places when den / gcd(den, 100) is 1, wait:
+            // pct = (num * 100) / den -> exact at 2 decimal places when (simp.den) divides 10000
+            var isExactAt2 = (10000 % simp.den) === 0;
+            if (isExactAt2) {
+              return Number(pct.toFixed(2)) + "%";
+            }
+            return "≈ " + Number(pct.toFixed(2)) + "%";
+          },
+
+          computeMetrics: function (num1, denom1, num2, denom2) {
+            var prodNum = num1 * num2;
+            var prodDen = denom1 * denom2;
+            var simplified = FractionMath.simplify(prodNum, prodDen);
+            return {
+              a: num1,
+              b: denom1,
+              c: num2,
+              d: denom2,
+              prodNum: prodNum,
+              prodDen: prodDen,
+              simplified: simplified,
+              decimalText: FractionMath.formatDecimal(prodNum, prodDen),
+              percentText: FractionMath.formatPercent(prodNum, prodDen)
+            };
+          },
+
+          buildExplanation: function (metrics, mode) {
+            var a = metrics.a;
+            var b = metrics.b;
+            var c = metrics.c;
+            var d = metrics.d;
+            var prodNum = metrics.prodNum;
+            var prodDen = metrics.prodDen;
+            var simp = metrics.simplified;
+
+            if (mode === "frac1") {
+              return (
+                "Đang xem riêng Phân số 1: hình vuông đơn vị được chia theo chiều dọc thành " +
+                b +
+                " cột bằng nhau và tô xanh " +
+                a +
+                " cột, biểu diễn phân số " +
+                a +
+                "/" +
+                b +
+                " diện tích."
+              );
+            }
+
+            if (mode === "frac2") {
+              return (
+                "Đang xem riêng Phân số 2: hình vuông đơn vị được chia theo chiều ngang thành " +
+                d +
+                " hàng bằng nhau và tô cam " +
+                c +
+                " hàng, biểu diễn phân số " +
+                c +
+                "/" +
+                d +
+                " diện tích."
+              );
+            }
+
+            if (prodNum === 0) {
+              return (
+                "Khi chồng " +
+                a +
+                "/" +
+                b +
+                " (cột xanh) với " +
+                c +
+                "/" +
+                d +
+                " (hàng cam), không có ô nào vừa thuộc cột được chọn vừa thuộc hàng được chọn. Do đó vùng giao nhau có 0/" +
+                prodDen +
+                " ô, tức kết quả bằng 0 (0%)."
+              );
+            }
+
+            if (prodNum === prodDen) {
+              return (
+                "Toàn bộ " +
+                b +
+                " cột và " +
+                d +
+                " hàng đều được chọn nên vùng giao nhau phủ kín tất cả " +
+                prodDen +
+                "/" +
+                prodDen +
+                " ô vuông nhỏ — tương ứng trọn vẹn 1 hình vuông đơn vị (100%)."
+              );
+            }
+
+            var text =
+              "Hình vuông đơn vị được chia thành " +
+              b +
+              " × " +
+              d +
+              " = " +
+              prodDen +
+              " ô vuông nhỏ bằng nhau. Giao điểm giữa " +
+              a +
+              " cột xanh và " +
+              c +
+              " hàng cam tạo thành " +
+              a +
+              " × " +
+              c +
+              " = " +
+              prodNum +
+              " ô màu xanh lá đậm, chiếm " +
+              metrics.percentText +
+              " diện tích hình vuông.";
+
+            if (simp.divisor > 1 && !simp.isWhole) {
+              text +=
+                " Phân số " +
+                prodNum +
+                "/" +
+                prodDen +
+                " rút gọn cho " +
+                simp.divisor +
+                " thành " +
+                simp.num +
+                "/" +
+                simp.den +
+                ".";
+            }
+
+            return text;
+          }
+        };
+
+        /* ====================================================================
+           2. STATE MANAGEMENT: Trạng thái đơn nguồn & Hàm cập nhật thuần
+           ==================================================================== */
+        function createDefaultState() {
+          return {
+            denom1: 5,
+            denom2: 4,
+            selectedCols: new Set([0, 1, 2]),
+            selectedRows: new Set([0, 1]),
+            mode: "multiply" // "frac1" | "frac2" | "multiply"
+          };
+        }
+
+        var state = createDefaultState();
+
+        function syncSelectionCount(selectedSet, maxDenom, targetCount) {
+          var clamped = Math.max(0, Math.min(maxDenom, targetCount));
+          // Ensure no out-of-range indices remain
+          Array.from(selectedSet).forEach(function (idx) {
+            if (idx >= maxDenom) selectedSet.delete(idx);
+          });
+          while (selectedSet.size < clamped) {
+            for (var i = 0; i < maxDenom; i++) {
+              if (!selectedSet.has(i)) {
+                selectedSet.add(i);
+                break;
+              }
+            }
+          }
+          while (selectedSet.size > clamped) {
+            var indices = Array.from(selectedSet).sort(function (x, y) {
+              return y - x;
+            });
+            selectedSet.delete(indices[0]);
+          }
+        }
+
+        function setDenom1(newDenom) {
+          state.denom1 = Math.max(1, Math.min(MAX_DIVISIONS, newDenom));
+          Array.from(state.selectedCols).forEach(function (idx) {
+            if (idx >= state.denom1) state.selectedCols.delete(idx);
+          });
+        }
+
+        function setDenom2(newDenom) {
+          state.denom2 = Math.max(1, Math.min(MAX_DIVISIONS, newDenom));
+          Array.from(state.selectedRows).forEach(function (idx) {
+            if (idx >= state.denom2) state.selectedRows.delete(idx);
+          });
+        }
+
+        function toggleCol(colIdx) {
+          if (colIdx < 0 || colIdx >= state.denom1) return;
+          if (state.selectedCols.has(colIdx)) {
+            state.selectedCols.delete(colIdx);
+          } else {
+            state.selectedCols.add(colIdx);
+          }
+        }
+
+        function toggleRow(rowIdx) {
+          if (rowIdx < 0 || rowIdx >= state.denom2) return;
+          if (state.selectedRows.has(rowIdx)) {
+            state.selectedRows.delete(rowIdx);
+          } else {
+            state.selectedRows.add(rowIdx);
+          }
+        }
+
+        function toggleGridCell(colIdx, rowIdx) {
+          if (state.mode === "frac1") {
+            toggleCol(colIdx);
+            return;
+          }
+          if (state.mode === "frac2") {
+            toggleRow(rowIdx);
+            return;
+          }
+          var colActive = state.selectedCols.has(colIdx);
+          var rowActive = state.selectedRows.has(rowIdx);
+          if (!colActive && !rowActive) {
+            state.selectedCols.add(colIdx);
+            state.selectedRows.add(rowIdx);
+          } else if (colActive && !rowActive) {
+            state.selectedRows.add(rowIdx);
+          } else if (!colActive && rowActive) {
+            state.selectedCols.add(colIdx);
+          } else {
+            state.selectedRows.delete(rowIdx);
+          }
+        }
+
+        /* ====================================================================
+           3. SVG POOL & DOM REFERENCES
+           ==================================================================== */
+        function createSvgEl(tag, attrs) {
+          var el = document.createElementNS(SVG_NS, tag);
+          if (attrs) {
+            Object.keys(attrs).forEach(function (key) {
+              el.setAttribute(key, String(attrs[key]));
+            });
+          }
+          return el;
+        }
+
+        var dom = {
+          resetBtn: document.getElementById("fe-reset-btn"),
+          modeButtons: Array.prototype.slice.call(document.querySelectorAll(".fe-seg-btn")),
+          boardHint: document.getElementById("fe-board-hint"),
+          svgTopCaption: document.getElementById("fe-svg-top-caption"),
+          svgLeftCaption: document.getElementById("fe-svg-left-caption"),
+          svgColTabs: document.getElementById("fe-svg-col-tabs"),
+          svgRowTabs: document.getElementById("fe-svg-row-tabs"),
+          svgColLayers: document.getElementById("fe-svg-col-layers"),
+          svgRowLayers: document.getElementById("fe-svg-row-layers"),
+          svgIntersectLayers: document.getElementById("fe-svg-intersect-layers"),
+          svgGridLines: document.getElementById("fe-svg-grid-lines"),
+          svgHitCells: document.getElementById("fe-svg-hit-cells"),
+
+          // Analysis DOM
+          gridDimLabel: document.getElementById("fe-grid-dimension-label"),
+          eqA: document.getElementById("fe-eq-a"),
+          eqB: document.getElementById("fe-eq-b"),
+          eqC: document.getElementById("fe-eq-c"),
+          eqD: document.getElementById("fe-eq-d"),
+          eqProdNum: document.getElementById("fe-eq-prod-num"),
+          eqProdDen: document.getElementById("fe-eq-prod-den"),
+          simpWrap: document.getElementById("fe-simplified-wrap"),
+          simpFracBox: document.getElementById("fe-simp-frac-box"),
+          eqSimpNum: document.getElementById("fe-eq-simp-num"),
+          eqSimpDen: document.getElementById("fe-eq-simp-den"),
+          eqWholeVal: document.getElementById("fe-eq-whole-val"),
+          metricCells: document.getElementById("fe-metric-cells"),
+          metricCellsSub: document.getElementById("fe-metric-cells-sub"),
+          metricDecimal: document.getElementById("fe-metric-decimal"),
+          metricPercent: document.getElementById("fe-metric-percent"),
+          explainText: document.getElementById("fe-explain-text"),
+
+          // Control DOM
+          readoutF1: document.getElementById("fe-readout-f1"),
+          readoutF2: document.getElementById("fe-readout-f2"),
+          num1Slider: document.getElementById("fe-num1-slider"),
+          num1Val: document.getElementById("fe-num1-val"),
+          num1Dec: document.getElementById("fe-num1-dec"),
+          num1Inc: document.getElementById("fe-num1-inc"),
+          denom1Slider: document.getElementById("fe-denom1-slider"),
+          denom1Val: document.getElementById("fe-denom1-val"),
+
+          num2Slider: document.getElementById("fe-num2-slider"),
+          num2Val: document.getElementById("fe-num2-val"),
+          num2Dec: document.getElementById("fe-num2-dec"),
+          num2Inc: document.getElementById("fe-num2-inc"),
+          denom2Slider: document.getElementById("fe-denom2-slider"),
+          denom2Val: document.getElementById("fe-denom2-val")
+        };
+
+        // Persistent SVG element pools for smooth CSS transitions
+        var svgPool = {
+          colOverlays: [],
+          rowOverlays: [],
+          intersectCells: [],
+          hitCells: [],
+          vLines: [],
+          hLines: [],
+          colTabs: [],
+          rowTabs: []
+        };
+
+        function initSvgPool() {
+          var i, j;
+
+          // Column color overlays (0..11)
+          for (i = 0; i < MAX_DIVISIONS; i++) {
+            var colRect = createSvgEl("rect", {
+              class: "fe-svg-col-layer",
+              y: BOARD_ORIGIN,
+              height: BOARD_SIZE,
+              fill: "rgba(59, 130, 246, 0.45)",
+              opacity: "0"
+            });
+            dom.svgColLayers.appendChild(colRect);
+            svgPool.colOverlays.push(colRect);
+          }
+
+          // Row color overlays (0..11)
+          for (j = 0; j < MAX_DIVISIONS; j++) {
+            var rowRect = createSvgEl("rect", {
+              class: "fe-svg-row-layer",
+              x: BOARD_ORIGIN,
+              width: BOARD_SIZE,
+              fill: "rgba(245, 158, 11, 0.45)",
+              opacity: "0"
+            });
+            dom.svgRowLayers.appendChild(rowRect);
+            svgPool.rowOverlays.push(rowRect);
+          }
+
+          // Intersection highlight cells & clickable grid cells (12x12)
+          for (j = 0; j < MAX_DIVISIONS; j++) {
+            svgPool.intersectCells[j] = [];
+            svgPool.hitCells[j] = [];
+            for (i = 0; i < MAX_DIVISIONS; i++) {
+              var interRect = createSvgEl("rect", {
+                class: "fe-svg-intersect-layer",
+                fill: "#15803d",
+                "fill-opacity": "0.88",
+                stroke: "#052e16",
+                "stroke-width": "2.2",
+                rx: "2",
+                opacity: "0"
+              });
+              dom.svgIntersectLayers.appendChild(interRect);
+              svgPool.intersectCells[j][i] = interRect;
+
+              var hitRect = createSvgEl("rect", {
+                class: "fe-svg-cell-hit",
+                "data-col": i,
+                "data-row": j
+              });
+              (function (colIdx, rowIdx) {
+                hitRect.addEventListener("click", function () {
+                  toggleGridCell(colIdx, rowIdx);
+                  render();
+                });
+              })(i, j);
+              dom.svgHitCells.appendChild(hitRect);
+              svgPool.hitCells[j][i] = hitRect;
+            }
+          }
+
+          // Vertical division lines (1..11)
+          for (i = 1; i < MAX_DIVISIONS; i++) {
+            var vLine = createSvgEl("line", {
+              class: "fe-svg-grid-line",
+              x1: 0,
+              y1: BOARD_ORIGIN,
+              x2: 0,
+              y2: BOARD_ORIGIN + BOARD_SIZE,
+              stroke: "#64748b",
+              "stroke-width": "1.25",
+              "stroke-opacity": "0.7",
+              opacity: "0"
+            });
+            vLine.style.transform = "translateX(" + (BOARD_ORIGIN + BOARD_SIZE) + "px)";
+            dom.svgGridLines.appendChild(vLine);
+            svgPool.vLines.push(vLine);
+          }
+
+          // Horizontal division lines (1..11)
+          for (j = 1; j < MAX_DIVISIONS; j++) {
+            var hLine = createSvgEl("line", {
+              class: "fe-svg-grid-line",
+              x1: BOARD_ORIGIN,
+              y1: 0,
+              x2: BOARD_ORIGIN + BOARD_SIZE,
+              y2: 0,
+              stroke: "#64748b",
+              "stroke-width": "1.25",
+              "stroke-opacity": "0.7",
+              opacity: "0"
+            });
+            hLine.style.transform = "translateY(" + (BOARD_ORIGIN + BOARD_SIZE) + "px)";
+            dom.svgGridLines.appendChild(hLine);
+            svgPool.hLines.push(hLine);
+          }
+
+          // Interactive Column Header Tabs (top)
+          for (i = 0; i < MAX_DIVISIONS; i++) {
+            var colTabG = createSvgEl("g", {
+              class: "fe-svg-header-tab",
+              role: "button",
+              tabindex: "0",
+              "aria-label": "Bật/tắt cột " + (i + 1)
+            });
+            var colTabBg = createSvgEl("rect", {
+              class: "fe-svg-tab-bg",
+              y: 28,
+              height: 26,
+              rx: 6,
+              fill: "#f8fafc",
+              stroke: "#cbd5e1",
+              "stroke-width": "1"
+            });
+            var colTabText = createSvgEl("text", {
+              y: 45,
+              "text-anchor": "middle",
+              "font-size": "12",
+              "font-weight": "700",
+              "font-family": "IBM Plex Mono, monospace",
+              fill: "#475569"
+            });
+            colTabText.textContent = String(i + 1);
+            colTabG.appendChild(colTabBg);
+            colTabG.appendChild(colTabText);
+            (function (colIdx) {
+              colTabG.addEventListener("click", function () {
+                toggleCol(colIdx);
+                render();
+              });
+              colTabG.addEventListener("keydown", function (e) {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  toggleCol(colIdx);
+                  render();
+                }
+              });
+            })(i);
+            dom.svgColTabs.appendChild(colTabG);
+            svgPool.colTabs.push({ g: colTabG, bg: colTabBg, text: colTabText });
+          }
+
+          // Interactive Row Header Tabs (left)
+          for (j = 0; j < MAX_DIVISIONS; j++) {
+            var rowTabG = createSvgEl("g", {
+              class: "fe-svg-header-tab",
+              role: "button",
+              tabindex: "0",
+              "aria-label": "Bật/tắt hàng " + (j + 1)
+            });
+            var rowTabBg = createSvgEl("rect", {
+              class: "fe-svg-tab-bg",
+              x: 28,
+              width: 26,
+              rx: 6,
+              fill: "#f8fafc",
+              stroke: "#cbd5e1",
+              "stroke-width": "1"
+            });
+            var rowTabText = createSvgEl("text", {
+              x: 41,
+              "text-anchor": "middle",
+              "dominant-baseline": "central",
+              "font-size": "12",
+              "font-weight": "700",
+              "font-family": "IBM Plex Mono, monospace",
+              fill: "#475569"
+            });
+            rowTabText.textContent = String(j + 1);
+            rowTabG.appendChild(rowTabBg);
+            rowTabG.appendChild(rowTabText);
+            (function (rowIdx) {
+              rowTabG.addEventListener("click", function () {
+                toggleRow(rowIdx);
+                render();
+              });
+              rowTabG.addEventListener("keydown", function (e) {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  toggleRow(rowIdx);
+                  render();
+                }
+              });
+            })(j);
+            dom.svgRowTabs.appendChild(rowTabG);
+            svgPool.rowTabs.push({ g: rowTabG, bg: rowTabBg, text: rowTabText });
+          }
+        }
+
+        /* ====================================================================
+           4. RENDER FUNCTIONS: Cập nhật SVG, Phân tích toán học & Controls
+           ==================================================================== */
+        function renderBoard() {
+          var b = state.denom1;
+          var d = state.denom2;
+          var a = state.selectedCols.size;
+          var c = state.selectedRows.size;
+          var colW = BOARD_SIZE / b;
+          var rowH = BOARD_SIZE / d;
+          var showFrac1 = state.mode === "frac1" || state.mode === "multiply";
+          var showFrac2 = state.mode === "frac2" || state.mode === "multiply";
+          var showIntersect = state.mode === "multiply";
+
+          dom.svgTopCaption.textContent = "Phân số 1 (Cột): " + a + " / " + b;
+          dom.svgLeftCaption.textContent = "Phân số 2 (Hàng): " + c + " / " + d;
+          dom.svgTopCaption.style.opacity = showFrac1 ? "1" : "0.4";
+          dom.svgLeftCaption.style.opacity = showFrac2 ? "1" : "0.4";
+
+          var i, j;
+
+          // Update column overlays & top tabs
+          for (i = 0; i < MAX_DIVISIONS; i++) {
+            var colOverlay = svgPool.colOverlays[i];
+            var colTab = svgPool.colTabs[i];
+            var isColVisible = i < b;
+            var isColSelected = isColVisible && state.selectedCols.has(i);
+
+            if (isColVisible) {
+              colOverlay.setAttribute("x", BOARD_ORIGIN + i * colW);
+              colOverlay.setAttribute("width", colW);
+              colOverlay.style.opacity = showFrac1 && isColSelected ? "1" : "0";
+
+              var tabGap = Math.min(4, colW * 0.12);
+              var tabW = Math.max(12, colW - tabGap * 2);
+              var tabX = BOARD_ORIGIN + i * colW + (colW - tabW) / 2;
+              colTab.g.style.display = "";
+              colTab.g.setAttribute("aria-pressed", isColSelected ? "true" : "false");
+              colTab.bg.setAttribute("x", tabX);
+              colTab.bg.setAttribute("width", tabW);
+              colTab.bg.setAttribute("fill", isColSelected ? "#2563eb" : "#f8fafc");
+              colTab.bg.setAttribute("stroke", isColSelected ? "#1d4ed8" : "#cbd5e1");
+              colTab.text.setAttribute("x", BOARD_ORIGIN + i * colW + colW / 2);
+              colTab.text.setAttribute("fill", isColSelected ? "#ffffff" : "#475569");
+            } else {
+              colOverlay.style.opacity = "0";
+              colTab.g.style.display = "none";
+            }
+          }
+
+          // Update row overlays & left tabs
+          for (j = 0; j < MAX_DIVISIONS; j++) {
+            var rowOverlay = svgPool.rowOverlays[j];
+            var rowTab = svgPool.rowTabs[j];
+            var isRowVisible = j < d;
+            var isRowSelected = isRowVisible && state.selectedRows.has(j);
+
+            if (isRowVisible) {
+              rowOverlay.setAttribute("y", BOARD_ORIGIN + j * rowH);
+              rowOverlay.setAttribute("height", rowH);
+              rowOverlay.style.opacity = showFrac2 && isRowSelected ? "1" : "0";
+
+              var rTabGap = Math.min(4, rowH * 0.12);
+              var rTabH = Math.max(12, rowH - rTabGap * 2);
+              var rTabY = BOARD_ORIGIN + j * rowH + (rowH - rTabH) / 2;
+              rowTab.g.style.display = "";
+              rowTab.g.setAttribute("aria-pressed", isRowSelected ? "true" : "false");
+              rowTab.bg.setAttribute("y", rTabY);
+              rowTab.bg.setAttribute("height", rTabH);
+              rowTab.bg.setAttribute("fill", isRowSelected ? "#d97706" : "#f8fafc");
+              rowTab.bg.setAttribute("stroke", isRowSelected ? "#b45309" : "#cbd5e1");
+              rowTab.text.setAttribute("y", BOARD_ORIGIN + j * rowH + rowH / 2);
+              rowTab.text.setAttribute("fill", isRowSelected ? "#ffffff" : "#475569");
+            } else {
+              rowOverlay.style.opacity = "0";
+              rowTab.g.style.display = "none";
+            }
+          }
+
+          // Update divider lines using smooth CSS transform
+          for (i = 0; i < svgPool.vLines.length; i++) {
+            var colIndex = i + 1;
+            var vLine = svgPool.vLines[i];
+            if (colIndex < b) {
+              vLine.style.transform = "translateX(" + (BOARD_ORIGIN + colIndex * colW) + "px)";
+              vLine.style.opacity = "1";
+            } else {
+              vLine.style.transform = "translateX(" + (BOARD_ORIGIN + BOARD_SIZE) + "px)";
+              vLine.style.opacity = "0";
+            }
+          }
+
+          for (j = 0; j < svgPool.hLines.length; j++) {
+            var rowIndex = j + 1;
+            var hLine = svgPool.hLines[j];
+            if (rowIndex < d) {
+              hLine.style.transform = "translateY(" + (BOARD_ORIGIN + rowIndex * rowH) + "px)";
+              hLine.style.opacity = "1";
+            } else {
+              hLine.style.transform = "translateY(" + (BOARD_ORIGIN + BOARD_SIZE) + "px)";
+              hLine.style.opacity = "0";
+            }
+          }
+
+          // Update intersection cells & hit grid
+          var inset = Math.min(3, Math.min(colW, rowH) * 0.07);
+          for (j = 0; j < MAX_DIVISIONS; j++) {
+            for (i = 0; i < MAX_DIVISIONS; i++) {
+              var interCell = svgPool.intersectCells[j][i];
+              var hitCell = svgPool.hitCells[j][i];
+              var inside = i < b && j < d;
+
+              if (inside) {
+                var cx = BOARD_ORIGIN + i * colW;
+                var cy = BOARD_ORIGIN + j * rowH;
+
+                hitCell.style.display = "";
+                hitCell.setAttribute("x", cx);
+                hitCell.setAttribute("y", cy);
+                hitCell.setAttribute("width", colW);
+                hitCell.setAttribute("height", rowH);
+
+                var bothSelected =
+                  showIntersect && state.selectedCols.has(i) && state.selectedRows.has(j);
+                interCell.setAttribute("x", cx + inset);
+                interCell.setAttribute("y", cy + inset);
+                interCell.setAttribute("width", Math.max(2, colW - inset * 2));
+                interCell.setAttribute("height", Math.max(2, rowH - inset * 2));
+                interCell.style.opacity = bothSelected ? "1" : "0";
+              } else {
+                hitCell.style.display = "none";
+                interCell.style.opacity = "0";
+              }
+            }
+          }
+
+          // Mode buttons state
+          dom.modeButtons.forEach(function (btn) {
+            var active = btn.getAttribute("data-mode") === state.mode;
+            btn.classList.toggle("fe-is-active", active);
+            btn.setAttribute("aria-selected", active ? "true" : "false");
+          });
+        }
+
+        function renderAnalysis() {
+          var a = state.selectedCols.size;
+          var b = state.denom1;
+          var c = state.selectedRows.size;
+          var d = state.denom2;
+          var m = FractionMath.computeMetrics(a, b, c, d);
+
+          dom.gridDimLabel.textContent = "Lưới " + b + " × " + d + " = " + m.prodDen + " ô";
+          dom.eqA.textContent = String(m.a);
+          dom.eqB.textContent = String(m.b);
+          dom.eqC.textContent = String(m.c);
+          dom.eqD.textContent = String(m.d);
+          dom.eqProdNum.textContent = String(m.prodNum);
+          dom.eqProdDen.textContent = String(m.prodDen);
+
+          // Simplified fraction display when reducible or integer
+          if (m.simplified.isWhole) {
+            dom.simpWrap.classList.remove("fe-is-hidden");
+            dom.simpFracBox.classList.add("fe-is-hidden");
+            dom.eqWholeVal.classList.remove("fe-is-hidden");
+            dom.eqWholeVal.textContent = String(m.simplified.num);
+          } else if (m.simplified.divisor > 1) {
+            dom.simpWrap.classList.remove("fe-is-hidden");
+            dom.simpFracBox.classList.remove("fe-is-hidden");
+            dom.eqWholeVal.classList.add("fe-is-hidden");
+            dom.eqSimpNum.textContent = String(m.simplified.num);
+            dom.eqSimpDen.textContent = String(m.simplified.den);
+          } else {
+            dom.simpWrap.classList.add("fe-is-hidden");
+          }
+
+          dom.metricCells.textContent = m.prodNum + " / " + m.prodDen + " ô";
+          dom.metricCellsSub.textContent = a + " cột × " + c + " hàng";
+          dom.metricDecimal.textContent = m.decimalText;
+          dom.metricPercent.textContent = m.percentText;
+          dom.explainText.textContent = FractionMath.buildExplanation(m, state.mode);
+        }
+
+        function renderControls() {
+          var a = state.selectedCols.size;
+          var b = state.denom1;
+          var c = state.selectedRows.size;
+          var d = state.denom2;
+
+          dom.readoutF1.textContent = a + " / " + b;
+          dom.readoutF2.textContent = c + " / " + d;
+
+          dom.denom1Slider.value = String(b);
+          dom.denom1Val.textContent = b + " cột";
+          dom.num1Slider.max = String(b);
+          dom.num1Slider.value = String(a);
+          dom.num1Val.textContent = a + " / " + b + " cột";
+          dom.num1Dec.disabled = a <= 0;
+          dom.num1Inc.disabled = a >= b;
+
+          dom.denom2Slider.value = String(d);
+          dom.denom2Val.textContent = d + " hàng";
+          dom.num2Slider.max = String(d);
+          dom.num2Slider.value = String(c);
+          dom.num2Val.textContent = c + " / " + d + " hàng";
+          dom.num2Dec.disabled = c <= 0;
+          dom.num2Inc.disabled = c >= d;
+        }
+
+        function render() {
+          renderBoard();
+          renderAnalysis();
+          renderControls();
+        }
+
+        /* ====================================================================
+           5. EVENT BINDINGS
+           ==================================================================== */
+        function bindEvents() {
+          dom.denom1Slider.addEventListener("input", function (e) {
+            setDenom1(parseInt(e.target.value, 10));
+            render();
+          });
+
+          dom.denom2Slider.addEventListener("input", function (e) {
+            setDenom2(parseInt(e.target.value, 10));
+            render();
+          });
+
+          dom.num1Slider.addEventListener("input", function (e) {
+            syncSelectionCount(state.selectedCols, state.denom1, parseInt(e.target.value, 10));
+            render();
+          });
+
+          dom.num2Slider.addEventListener("input", function (e) {
+            syncSelectionCount(state.selectedRows, state.denom2, parseInt(e.target.value, 10));
+            render();
+          });
+
+          dom.num1Dec.addEventListener("click", function () {
+            syncSelectionCount(state.selectedCols, state.denom1, state.selectedCols.size - 1);
+            render();
+          });
+
+          dom.num1Inc.addEventListener("click", function () {
+            syncSelectionCount(state.selectedCols, state.denom1, state.selectedCols.size + 1);
+            render();
+          });
+
+          dom.num2Dec.addEventListener("click", function () {
+            syncSelectionCount(state.selectedRows, state.denom2, state.selectedRows.size - 1);
+            render();
+          });
+
+          dom.num2Inc.addEventListener("click", function () {
+            syncSelectionCount(state.selectedRows, state.denom2, state.selectedRows.size + 1);
+            render();
+          });
+
+          dom.modeButtons.forEach(function (btn) {
+            btn.addEventListener("click", function () {
+              state.mode = btn.getAttribute("data-mode") || "multiply";
+              render();
+            });
+          });
+
+          dom.resetBtn.addEventListener("click", function () {
+            state = createDefaultState();
+            render();
+          });
+        }
+
+        // Initialize application
+        initSvgPool();
+        bindEvents();
+        render();
+      })();
+    </script>
+  </body>
+</html>
