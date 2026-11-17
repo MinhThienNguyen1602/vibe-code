@@ -3,6 +3,9 @@
    Scoped pure CSS stylesheet (.fraction-explorer-app / .fe-*)
    ========================================================================== */
 
+/* --------------------------------------------------------------------------
+   1. BIẾN MÀU CHUNG & KHUNG BỌC MODULE (.fraction-explorer-app)
+   -------------------------------------------------------------------------- */
 .fe-host-body {
   margin: 0;
   padding: 0;
@@ -13,37 +16,52 @@
 }
 
 .fraction-explorer-app {
+  /* Màu nền và đường viền HTML nói chung */
   --fe-bg-canvas: #f4f6f9;
   --fe-bg-surface: #ffffff;
   --fe-bg-subtle: #f8fafc;
   --fe-bg-muted: #f1f5f9;
   --fe-border-hairline: #e2e8f0;
   --fe-border-strong: #cbd5e1;
+  --fe-border-hover: #94a3b8;
 
+  /* Màu chữ HTML nói chung */
   --fe-text-primary: #0f172a;
   --fe-text-secondary: #475569;
+  --fe-text-prose: #1e293b;
   --fe-text-muted: #64748b;
 
+  /* Màu ngữ nghĩa Phân số 1 (Xanh dương) */
   --fe-blue-solid: #2563eb;
+  --fe-blue-deep: #1d4ed8;
   --fe-blue-soft: #eff6ff;
   --fe-blue-border: #bfdbfe;
   --fe-blue-layer: rgba(59, 130, 246, 0.45);
 
+  /* Màu ngữ nghĩa Phân số 2 (Vàng / Cam) */
   --fe-amber-solid: #d97706;
+  --fe-amber-deep: #b45309;
   --fe-amber-soft: #fffbeb;
   --fe-amber-border: #fde68a;
   --fe-amber-layer: rgba(245, 158, 11, 0.45);
 
+  /* Màu ngữ nghĩa Vùng giao nhau (Xanh lá đậm) */
   --fe-green-solid: #15803d;
   --fe-green-deep: #14532d;
+  --fe-green-border-dark: #052e16;
   --fe-green-soft: #f0fdf4;
   --fe-green-border: #bbf7d0;
+
+  /* Màu tương tác SVG */
+  --fe-svg-cell-hover: rgba(15, 23, 42, 0.045);
+  --fe-svg-tab-hover-stroke: #475569;
 
   --fe-radius-lg: 14px;
   --fe-radius-md: 10px;
   --fe-radius-sm: 7px;
 
   --fe-shadow-card: 0 1px 3px rgba(15, 23, 42, 0.05), 0 4px 16px rgba(15, 23, 42, 0.04);
+  --fe-shadow-tab: 0 1px 2px rgba(15, 23, 42, 0.08);
   --fe-ease: cubic-bezier(0.16, 1, 0.3, 1);
 
   font-family: "Plus Jakarta Sans", "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -66,7 +84,11 @@
   margin: 0 auto;
 }
 
-/* Header */
+/* --------------------------------------------------------------------------
+   2. CÁC CLASS BỐ CỤC & MÀU DÙNG CHO HTML NÓI CHUNG (.fe-*)
+   -------------------------------------------------------------------------- */
+
+/* Header HTML */
 .fe-header {
   display: flex;
   align-items: flex-end;
@@ -113,7 +135,7 @@
   flex-shrink: 0;
 }
 
-/* Buttons */
+/* Nút bấm HTML (.fe-btn, .fe-step-btn, .fe-seg-btn) */
 .fe-btn {
   display: inline-flex;
   align-items: center;
@@ -137,7 +159,7 @@
 
 .fe-btn:hover {
   background-color: var(--fe-bg-subtle);
-  border-color: #94a3b8;
+  border-color: var(--fe-border-hover);
 }
 
 .fe-btn:active {
@@ -146,13 +168,12 @@
 
 .fe-btn:focus-visible,
 .fe-seg-btn:focus-visible,
-.fe-step-btn:focus-visible,
-.fe-slider:focus-visible {
+.fe-step-btn:focus-visible {
   outline: 2px solid var(--fe-blue-solid);
   outline-offset: 2px;
 }
 
-/* Main 2-column workspace */
+/* Bố cục chính 2 cột */
 .fe-workspace {
   display: grid;
   grid-template-columns: minmax(0, 1.12fr) minmax(350px, 0.88fr);
@@ -160,7 +181,7 @@
   align-items: start;
 }
 
-/* Card surface (single elevation) */
+/* Thẻ panel HTML */
 .fe-panel {
   background-color: var(--fe-bg-surface);
   border: 1px solid var(--fe-border-hairline);
@@ -169,7 +190,7 @@
   padding: 20px;
 }
 
-/* Left Column: Interactive Board */
+/* Cột trái HTML: Vùng chứa bàn cờ */
 .fe-board-panel {
   display: flex;
   flex-direction: column;
@@ -191,7 +212,7 @@
   color: var(--fe-text-primary);
 }
 
-/* Mode Segmented Control */
+/* Nhóm nút chuyển chế độ hiển thị HTML */
 .fe-mode-group {
   display: inline-flex;
   align-items: center;
@@ -228,7 +249,7 @@
 .fe-seg-btn.fe-is-active {
   background-color: var(--fe-bg-surface);
   color: var(--fe-text-primary);
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+  box-shadow: var(--fe-shadow-tab);
 }
 
 .fe-seg-btn[data-mode="frac1"].fe-is-active {
@@ -243,7 +264,7 @@
   color: var(--fe-green-solid);
 }
 
-/* SVG Board Stage */
+/* Khung bao ngoài SVG */
 .fe-svg-stage {
   background-color: var(--fe-bg-subtle);
   border: 1px solid var(--fe-border-hairline);
@@ -263,12 +284,118 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-/* SVG internal animated layers */
+/* --------------------------------------------------------------------------
+   3. CÁC CLASS MÀU DÙNG RIÊNG CHO KHUNG SVG (.fe-svg-*)
+   -------------------------------------------------------------------------- */
+
+/* Nền, khung viền và nhãn văn bản trong SVG */
+.fe-svg-board-base {
+  fill: var(--fe-bg-surface);
+}
+
+.fe-svg-board-frame {
+  fill: none;
+  stroke: var(--fe-text-primary);
+  stroke-width: 2;
+}
+
+.fe-svg-caption-blue {
+  fill: var(--fe-blue-solid);
+  transition: opacity 180ms var(--fe-ease);
+}
+
+.fe-svg-caption-amber {
+  fill: var(--fe-amber-solid);
+  transition: opacity 180ms var(--fe-ease);
+}
+
+.fe-svg-caption-muted {
+  opacity: 0.4;
+}
+
+.fe-svg-unit-label {
+  fill: var(--fe-text-muted);
+}
+
+/* Các lớp tô màu phân số và đường chia lưới trong SVG */
+.fe-svg-col-layer {
+  fill: var(--fe-blue-layer);
+}
+
+.fe-svg-row-layer {
+  fill: var(--fe-amber-layer);
+}
+
+.fe-svg-intersect-layer {
+  fill: var(--fe-green-solid);
+  fill-opacity: 0.88;
+  stroke: var(--fe-green-border-dark);
+  stroke-width: 2.2;
+}
+
+.fe-svg-grid-line {
+  stroke: var(--fe-text-muted);
+  stroke-width: 1.25;
+  stroke-opacity: 0.7;
+}
+
+/* Thẻ số cột (trên) và thẻ số hàng (trái) trong SVG */
+.fe-svg-header-tab {
+  cursor: pointer;
+}
+
+.fe-svg-header-tab .fe-svg-tab-bg {
+  fill: var(--fe-bg-subtle);
+  stroke: var(--fe-border-strong);
+  stroke-width: 1;
+}
+
+.fe-svg-header-tab .fe-svg-tab-text {
+  fill: var(--fe-text-secondary);
+}
+
+.fe-svg-header-tab:hover .fe-svg-tab-bg {
+  stroke: var(--fe-svg-tab-hover-stroke);
+  stroke-width: 1.5;
+}
+
+.fe-svg-col-tab.fe-is-selected .fe-svg-tab-bg {
+  fill: var(--fe-blue-solid);
+  stroke: var(--fe-blue-deep);
+}
+
+.fe-svg-row-tab.fe-is-selected .fe-svg-tab-bg {
+  fill: var(--fe-amber-solid);
+  stroke: var(--fe-amber-deep);
+}
+
+.fe-svg-header-tab.fe-is-selected .fe-svg-tab-text {
+  fill: var(--fe-bg-surface);
+}
+
+.fe-svg-header-tab:focus-visible {
+  outline: 2px solid var(--fe-blue-solid);
+  outline-offset: 2px;
+}
+
+/* Vùng bắt sự kiện click từng ô lưới trong SVG */
+.fe-svg-cell-hit {
+  cursor: pointer;
+  fill: transparent;
+}
+
+.fe-svg-cell-hit:hover {
+  fill: var(--fe-svg-cell-hover);
+}
+
+/* Hiệu ứng chuyển động mượt cho các lớp SVG */
 .fe-svg-col-layer,
 .fe-svg-row-layer,
 .fe-svg-intersect-layer,
 .fe-svg-grid-line,
 .fe-svg-header-tab,
+.fe-svg-tab-bg,
+.fe-svg-tab-text,
 .fe-svg-cell-hit {
   transition: opacity 220ms var(--fe-ease),
               fill 200ms var(--fe-ease),
@@ -277,35 +404,11 @@
               transform 240ms var(--fe-ease);
 }
 
-.fe-svg-header-tab {
-  cursor: pointer;
-}
+/* --------------------------------------------------------------------------
+   4. CÁC CLASS MÀU & BỐ CỤC CHO PHẦN HTML CÒN LẠI (CHÚ THÍCH, PHÂN TÍCH, INPUT)
+   -------------------------------------------------------------------------- */
 
-.fe-svg-header-tab:hover .fe-svg-tab-bg {
-  stroke: #475569;
-  stroke-width: 1.5;
-}
-
-.fe-svg-header-tab:focus-visible {
-  outline: 2px solid var(--fe-blue-solid);
-  outline-offset: 2px;
-}
-
-.fe-svg-cell-hit {
-  cursor: pointer;
-  fill: transparent;
-}
-
-.fe-svg-cell-hit:hover {
-  fill: rgba(15, 23, 42, 0.045);
-}
-
-.fe-svg-hover-indicator {
-  pointer-events: none;
-  transition: opacity 120ms ease, transform 120ms var(--fe-ease);
-}
-
-/* Legend & Hint */
+/* Chú thích màu HTML dưới bàn cờ */
 .fe-board-footer {
   display: flex;
   flex-direction: column;
@@ -355,14 +458,14 @@
   color: var(--fe-text-muted);
 }
 
-/* Right Column: Analysis & Controls */
+/* Cột phải HTML */
 .fe-side-stack {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-/* Equation Showcase */
+/* Bảng phân tích toán học HTML */
 .fe-analysis-panel {
   display: flex;
   flex-direction: column;
@@ -423,6 +526,7 @@
   font-size: 1.25rem;
 }
 
+/* Class màu phân số trong HTML */
 .fe-frac-1 {
   color: var(--fe-blue-solid);
 }
@@ -455,7 +559,7 @@
   display: none !important;
 }
 
-/* Metrics Row (3 tabular figures) */
+/* Lưới chỉ số HTML */
 .fe-metrics-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -496,7 +600,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Pedagogical Explanation Box (all-around hairline border, no thick left stripe) */
+/* Hộp giải thích sư phạm HTML */
 .fe-explain-box {
   background-color: var(--fe-green-soft);
   border: 1px solid var(--fe-green-border);
@@ -515,10 +619,10 @@
   margin: 0;
   font-size: 0.875rem;
   line-height: 1.55;
-  color: #1e293b;
+  color: var(--fe-text-prose);
 }
 
-/* Controls Panel */
+/* Bảng điều khiển input HTML */
 .fe-controls-panel {
   display: flex;
   flex-direction: column;
@@ -633,7 +737,7 @@
 
 .fe-step-btn:hover:not(:disabled) {
   background-color: var(--fe-bg-muted);
-  border-color: #94a3b8;
+  border-color: var(--fe-border-hover);
 }
 
 .fe-step-btn:disabled {
@@ -659,7 +763,7 @@
 }
 
 .fe-number-input:hover {
-  border-color: #94a3b8;
+  border-color: var(--fe-border-hover);
 }
 
 .fe-number-input:focus {
@@ -677,12 +781,6 @@
   outline: 2px solid var(--fe-amber-solid);
   outline-offset: 1px;
   border-color: var(--fe-amber-solid);
-}
-
-@media (max-width: 520px) {
-  .fe-number-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* Responsive Breakpoints */
@@ -728,13 +826,23 @@
   }
 }
 
+@media (max-width: 520px) {
+  .fe-number-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .fe-svg-col-layer,
   .fe-svg-row-layer,
   .fe-svg-intersect-layer,
   .fe-svg-grid-line,
   .fe-svg-header-tab,
+  .fe-svg-tab-bg,
+  .fe-svg-tab-text,
   .fe-svg-cell-hit,
+  .fe-svg-caption-blue,
+  .fe-svg-caption-amber,
   .fe-btn,
   .fe-seg-btn,
   .fe-step-btn {
